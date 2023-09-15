@@ -31,4 +31,5 @@ jobs:
         run: echo "${{ secrets.SALESFORCE_JWT_SECRET_KEY }}" > server.key
       - name: JWT Authentication to target Org
         run: sfdx auth:jwt:grant --client-id=${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwt-key-file=server.key --username=${{ vars.SALESFORCE_USERNAME }} --set-default-dev-hub -a targetOrg
-     
+      - name: Deploy Package with Tests
+        run: sfdx source:deploy -x manifest/package.xml --predestructivechanges manifest/destructiveChangesPre.xml --postdestructivechanges manifest/destructiveChangesPost.xml -l RunLocalTests -w 1000 --verbose --loglevel fatal --json -u targetOrg -g

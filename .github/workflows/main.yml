@@ -33,4 +33,4 @@ jobs:
         run: sfdx auth:jwt:grant --client-id=${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwt-key-file=server.key --username=${{ vars.SALESFORCE_USERNAME }} --set-default-dev-hub -a targetOrg
           
       - name: Create Scratch Org
-        run: sf org create scratch --set-default --definition-file config/project-scratch-def.json
+        run: sf org create scratch --set-default --definition-file config/project-scratch-def.json -u targetOrg

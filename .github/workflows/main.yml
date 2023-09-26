@@ -33,7 +33,7 @@ jobs:
         run: sfdx auth:jwt:grant --client-id=${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwt-key-file=server.key --username=${{ vars.SALESFORCE_USERNAME }} --set-default-dev-hub -a targetOrg
       
       - name: Create Scratch Org
-        run: sfdx force:org:create -f project-scratch-def.json --nonamespace --durationdays 30
+        run: sfdx force:org:create --nonamespace --durationdays 30
       
       - name: push code to Scarcth Org
         run: sfdx force:source:push

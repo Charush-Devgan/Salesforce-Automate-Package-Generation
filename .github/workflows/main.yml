@@ -38,3 +38,9 @@ jobs:
           
       - name: Create Scratch Org
         run: sf org create scratch --set-default --definition-file config/project-scratch-def.json
+      
+      - name: Deploy code to Scratch Org 
+        run: sf project deploy start
+
+      - name: Create a package
+        run: sf package create --name GIFter --description "Using GIPHY to find GIFs and post to Chatter" --path force-app --package-type Unlocked --target-dev-hub DevHub

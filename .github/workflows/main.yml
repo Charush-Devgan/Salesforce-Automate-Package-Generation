@@ -29,6 +29,7 @@ jobs:
           ~/sfdx/bin/sfdx version
       - name: Setup server key
         run: echo "${{ secrets.SALESFORCE_JWT_SECRET_KEY }}" > server.key
+     
       - name: Populate auth file
         shell: bash
         run: 'echo ${{ secrets.SFDX_AUTH_URL }} > ./DEVHUB_SFDX_URL.txt'
@@ -43,4 +44,11 @@ jobs:
         run: sf project deploy start
 
       - name: Create a package
-        run: sf package create --name GIFter --description "Using GIPHY to find GIFs and post to Chatter" --path force-app --package-type Unlocked --target-dev-hub DevHub
+        run: sf package create --name "EF SF4B2C" --path force-app --package-type Unlocked --target-dev-hub devhub
+        
+      - name: Create package Version
+        run: sf package version create --package "EF SF4B2C" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub DevHub
+      
+      - name: Delete Scratch Org
+        run: 'sf org delete -p -a devhub'
+        

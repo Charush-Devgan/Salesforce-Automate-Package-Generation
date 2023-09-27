@@ -47,7 +47,7 @@ jobs:
         run: sf project deploy start
           
       - name: Create package Version
-        run: sf package version create --package ${{ vars.PACKAGE_NAME }} --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub
+        run: sf package version create --package "${{ vars.PACKAGE_NAME }}" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub
       
       - name: Delete Scratch Org
         run: 'sf org delete -p -a devhub'

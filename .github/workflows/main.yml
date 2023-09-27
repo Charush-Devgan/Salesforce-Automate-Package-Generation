@@ -45,13 +45,7 @@ jobs:
       
       - name: Deploy code to Scratch Org 
         run: sf project deploy start
-
-      - name: Check if package is Already Created
-        run: sf package list
-        
-      - name: Create a package
-        run: sf package create --name ${{ vars.PACKAGE_NAME }} --path force-app --package-type Unlocked --target-dev-hub devhub
-        
+          
       - name: Create package Version
         run: sf package version create --package ${{ vars.PACKAGE_NAME }} --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub
       

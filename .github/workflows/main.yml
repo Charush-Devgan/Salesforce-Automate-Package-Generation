@@ -29,6 +29,10 @@ jobs:
           echo "$HOME/sfdx/bin" >> $GITHUB_PATH
 
           ~/sfdx/bin/sfdx version
+
+      - name: Install jq
+        run: |
+          sudo apt-get install jq
            
       - name: Populate auth file
         shell: bash

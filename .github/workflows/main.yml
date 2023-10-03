@@ -48,7 +48,13 @@ jobs:
           
       - name: Create package Version
         run: sf package version create --package "${{ vars.PACKAGE_NAME }}" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub
-      
+
+      - name: Update sfdx-project.json
+        run: |
+          git add git add sfdx-project.json
+          git commit -m "Updating new pre-release version"
+          git push
+        
       - name: Delete Scratch Org
         run: 'sf org delete -p -a devhub'
         

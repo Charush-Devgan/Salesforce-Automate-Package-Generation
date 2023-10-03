@@ -37,9 +37,6 @@ jobs:
       - name: Authenticate Dev Hub
         run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
           
-      - name: Create Scratch Org
-        run: sf org create scratch --set-default --definition-file config/project-scratch-def.json
-      
       - name: Deploy code to Scratch Org 
         run: sf project deploy start
 
@@ -57,7 +54,5 @@ jobs:
           git commit -m "Updating new package version"
           git push
         
-      - name: Delete Scratch Org
-        if: always()
-        run: 'sf org delete -p -a devhub'
+      
         

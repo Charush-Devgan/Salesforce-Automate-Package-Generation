@@ -51,10 +51,11 @@ jobs:
 
       - name: Update sfdx-project.json
         run: |
-          git add git add sfdx-project.json
-          git commit -m "Updating new pre-release version"
+          git add sfdx-project.json
+          git commit -m "Updating new package version"
           git push
         
       - name: Delete Scratch Org
+        if: always()
         run: 'sf org delete -p -a devhub'
         

@@ -51,6 +51,8 @@ jobs:
 
       - name: Update sfdx-project.json
         run: |
+          git config user.name "release[bot]"
+          git config user.email "<>"
           git add sfdx-project.json
           git commit -m "Updating new package version"
           git push

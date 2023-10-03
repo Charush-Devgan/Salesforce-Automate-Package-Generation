@@ -3,9 +3,6 @@
     {
       "path": "force-app",
       "default": true,
-      "package": "EF SF4B2C",
-      "versionName": "ver 1.0", 
-      "versionNumber": "1.0.0.NEXT"
     }
   ],
   "name": "Salesforce-Automate-Package-Generation",

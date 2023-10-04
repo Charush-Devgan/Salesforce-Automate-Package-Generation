@@ -10,7 +10,6 @@ jobs:
   Generate-Package:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: LIVE
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -51,8 +50,8 @@ jobs:
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
-          echo $package_found
-          package_exists=${{ '$package_found' == [] }}  
+          echo $package_found.length
+          package_exists= '$package_found.length'  
           echo $package_exists
           echo "PACKAGE_EXISTS='$package_exists'" >> "$GITHUB_OUTPUT"
         

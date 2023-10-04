@@ -58,6 +58,7 @@ jobs:
           echo '$PACKAGE_EXISTS'
           
       - name: Create Package
+        if: steps.package-finder.outputs.PACKAGE_EXISTS==true
         run: |
           echo ${{ steps.package-finder.outputs.PACKAGE_EXISTS}}
            sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  

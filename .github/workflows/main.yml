@@ -43,10 +43,12 @@ jobs:
         run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
 
       - name: Check if package exists
+        id: package-finder
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json
-          package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
-          echo $package_found
+          package_found= $(cat response.json | grep "\"Name\": \"${{ vars.PACKAGE_NAME }}\"")
+          echo $package
+          
           
       - name: Create package
         if: ${{ env.PACKAGE_FOUND  == [] }}

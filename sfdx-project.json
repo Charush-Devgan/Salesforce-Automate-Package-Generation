@@ -14,6 +14,7 @@
   "sourceApiVersion": "58.0",
   "packageAliases": {
     "Test Package 2": "0Ho5h000000oM0sCAE",
-    "Test Package 2@0.1.0-1": "04t5h0000005zSDAAY"
+    "Test Package 2@0.1.0-1": "04t5h0000005zSDAAY",
+    "Test Package 2@0.1.0-2": "04t5h0000005znLAAQ"
   }
 }

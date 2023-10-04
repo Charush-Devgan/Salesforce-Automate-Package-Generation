@@ -44,6 +44,7 @@ jobs:
       - name: Check if package exists
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json
+          
           $(sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json)
             
       - name: Create package

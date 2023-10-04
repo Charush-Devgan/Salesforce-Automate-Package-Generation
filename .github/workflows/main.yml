@@ -54,13 +54,15 @@ jobs:
           package_exists=${{ '$package_found' != '[]' }}
           echo $package_exists
         
-          echo "PACKAGE_EXISTS='$package_exists'" >> "$GITHUB_OUTPUT"
-          echo '$PACKAGE_EXISTS'
+          echo "CREATE_PACKAGE='$package_exists'" >> "$GITHUB_OUTPUT"
+          echo '$CREATE_PACKAGE'
           
       - name: Create Package
-        if: steps.package-finder.outputs.PACKAGE_EXISTS==true
+        env:
+          CREATE_PACKAGE: ${{ steps.package-finder.outputs.CREATE_PACKAGE }}
+        if: steps.package-finder.outputs.CREATE_PACKAGE==true
         run: |
-          echo ${{ steps.package-finder.outputs.PACKAGE_EXISTS}}
+          echo ${{ steps.package-finder.outputs.CREATE_PACKAGE}}
            sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  
             
       - name: Create package Version

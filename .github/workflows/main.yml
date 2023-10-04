@@ -45,8 +45,10 @@ jobs:
       - name: Check if package exists
         id: package-finder
         run: |
-          sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json
-          package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}")) | join( " " )' < response.json  | head )
+          sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
+          package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
+          package_found > result.json
+          echo $(jq 'input + {text: tostring}' result.json )
           echo $package_found
           
           

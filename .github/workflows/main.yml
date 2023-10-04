@@ -43,7 +43,7 @@ jobs:
 
       - name: Check if package exists
         run: |
-          sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json >> response.json
+          sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json
           
           
           $(jq .result | select(.Name=="${{ vars.SALESFORCE_USERNAME }}") < response.json)

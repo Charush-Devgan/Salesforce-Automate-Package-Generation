@@ -45,8 +45,8 @@ jobs:
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json
           
-          test $(sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json)
-            
+          $ jq -c '.result[] | select(.Name=="${{ vars.PACKAGE_NAME }}")' 
+             
       - name: Create package
         run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub
         

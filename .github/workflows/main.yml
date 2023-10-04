@@ -45,7 +45,7 @@ jobs:
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json
           $(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head ) > response.json
-          package_fount=$( jq '. | length' response.json)
+          package_fount=$( jq '. | length' < response.json)
           
       - name: Create package
         if: github.ref == 'refs/heads/qa'

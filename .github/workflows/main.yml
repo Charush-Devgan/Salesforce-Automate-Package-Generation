@@ -53,7 +53,7 @@ jobs:
       - name: Create package
         env:
           PACKAGE_FOUND: ${{ steps.package-finder.outputs.PACKAGE_FOUND }}
-        if: $PACKAGE_FOUND == []
+        if: ${{ env.PACKAGE_FOUND }} == []
         run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub
         
       - name: Create package Version

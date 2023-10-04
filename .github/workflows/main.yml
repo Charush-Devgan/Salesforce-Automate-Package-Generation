@@ -46,15 +46,19 @@ jobs:
       - name: Authenticate Dev Hub
         run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
 
-      - name: Check if package exists
+      - name: Check if package with same name exists
+        id: package-finder
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
-          echo $package_found
-          package_exists=${{ '$package_found' != '[]' }}  
+          package_exists=${{ '$package_found' == '[]' }}  
           echo $package_exists
-      
+          echo "PACKAGE_EXISTS='$package_exists'" >> "$GITHUB_OUTPUT"
+        
       - name: Create Package
+        env:
+          PACKAGE_EXISTS: ${{ steps.package-finder.outputs.PACKAGE_EXISTS }}
+        if: $PACKAGE_EXISTS
         run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  
         
       - name: Create package Version

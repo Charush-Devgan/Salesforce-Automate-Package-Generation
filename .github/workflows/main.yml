@@ -43,17 +43,13 @@ jobs:
         run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
 
       - name: Check if package exists
-        id: package-finder
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
           echo $package_found
-          echo "PACKAGE_FOUND=${package_found}" >> "$GITHUB_OUTPUT"
           
       - name: Create package
-        env:
-          PACKAGE_FOUND: ${{ steps.package-finder.outputs.PACKAGE_FOUND }}
-        if: ${{ env.PACKAGE_FOUND }} == []
+        if: ${{ env.PACKAGE_FOUND  == [] }}
         run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub
         
       - name: Create package Version

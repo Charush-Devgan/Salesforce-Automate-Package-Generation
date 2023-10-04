@@ -51,10 +51,11 @@ jobs:
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
           echo $package_found
-          if: $package_found == '[]'
-            sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  
-            
           
+      - name: Create Package
+        if: $package_found == '[]'
+        run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  
+        
       - name: Create package Version
         run: sf package version create --package "${{ vars.PACKAGE_NAME }}" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub
 

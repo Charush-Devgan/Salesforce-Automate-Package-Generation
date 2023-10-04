@@ -56,10 +56,8 @@ jobs:
           echo "PACKAGE_EXISTS='$package_exists'" >> "$GITHUB_OUTPUT"
         
       - name: Create Package
-        if: ${{ steps.package-finder.outputs.PACKAGE_EXISTS }} == true
-        run: |
-          echo ${{ env.PACKAGE_EXISTS }}
-          sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  
+      - if: steps.package-finder.outputs.PACKAGE_EXISTS == true
+        run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  
             
       - name: Create package Version
         run: sf package version create --package "${{ vars.PACKAGE_NAME }}" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub

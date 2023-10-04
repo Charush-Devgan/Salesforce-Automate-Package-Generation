@@ -53,7 +53,7 @@ jobs:
           echo $package_found
           echo '${#package_found[@]}'
           EMPTY_ARRAY=[]
-          package_exists='$(#package_found[@])'
+          package_exists=$(#package_found[@])
           echo $package_exists
         
           echo "CREATE_PACKAGE='$package_exists'" >> "$GITHUB_OUTPUT"

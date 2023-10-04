@@ -42,8 +42,10 @@ jobs:
         run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
 
       - name: Check if package exists
-        run: sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json
-        
+        run: |
+          sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json
+          $(sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json)
+            
       - name: Create package
         run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub
         

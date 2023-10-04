@@ -1,6 +1,10 @@
 name: Automate Package Generation
 
-on: [workflow_dispatch]
+on: 
+  push:
+    branches: 
+      - 'main'
+  workflow_dispatch:
 
 jobs: 
   Generate-Package:
@@ -47,7 +51,7 @@ jobs:
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
-          package_found > result.json
+          $package_found > result.json
           echo $(jq 'input + {text: tostring}' result.json )
           echo $package_found
           

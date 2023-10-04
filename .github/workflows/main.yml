@@ -51,10 +51,8 @@ jobs:
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
-          $package_found > result.json
-          echo $(jq 'input + {text: tostring}' result.json )
-          echo $package_found
-          
+          echo '$package_found' | jq '. | length'
+          $package_found
           
       - name: Create package
         run: sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub

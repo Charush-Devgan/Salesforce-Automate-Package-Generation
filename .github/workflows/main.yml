@@ -46,7 +46,7 @@ jobs:
         id: package-finder
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json
-          package_found=$(jq '.result | . | select(.Name=="${{ vars.PACKAGE_NAME }}")' < response.json  | head )
+          package_found=$(jq '.result | (. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
           echo $package
           
           

@@ -51,8 +51,8 @@ jobs:
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
           exists=$(grep "${{ vars.PACKAGE_NAME }}"  response.json)
           package_exists=0;
-          echo '$exists'
-          echo '$package_exists'
+          echo $exists
+          echo $package_exists
           
       - name: Create Package
         env:

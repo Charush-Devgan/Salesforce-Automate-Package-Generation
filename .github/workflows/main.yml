@@ -61,7 +61,7 @@ jobs:
       - name: Create Package
         env:
           CREATE_PACKAGE: ${{ steps.package-finder.outputs.CREATE_PACKAGE }}
-        if: steps.package-finder.outputs.CREATE_PACKAGE==0
+        if: CREATE_PACKAGE == 0
         run: |
           echo ${{ steps.package-finder.outputs.CREATE_PACKAGE}}
            sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  

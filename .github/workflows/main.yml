@@ -52,12 +52,7 @@ jobs:
           exists=$(grep "${{ vars.PACKAGE_NAME }}"  response.json)
           echo $exists
           package_exists=0;
-          echo $exists
-          echo $package_exists
-          if [ -z $exists ] ; then package_exists=0 ; else package_exists=1; fi  
-          echo $package_exists
-          echo "CREATE_PACKAGE='$package_exists'" >> "$GITHUB_OUTPUT"
-          echo '$CREATE_PACKAGE'
+          
           
       - name: Create Package
         env:

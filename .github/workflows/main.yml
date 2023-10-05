@@ -53,6 +53,8 @@ jobs:
           package_exists=0;
           echo $exists
           echo $package_exists
+          if [ -z '$exists' ] ; then package_exists=0 ; else package_exists=1; fi  
+          echo $package_exists
           
       - name: Create Package
         env:

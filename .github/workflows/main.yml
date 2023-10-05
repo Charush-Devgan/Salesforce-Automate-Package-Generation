@@ -49,14 +49,10 @@ jobs:
         id: package-finder
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
-          package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
-          echo $package_found
-          echo '$package_found' | jq -r tostring  
-          package_exists=$(jq '. | length') < $package_found
-          echo $package_exists
-        
-          echo "CREATE_PACKAGE='$package_exists'" >> "$GITHUB_OUTPUT"
-          echo '$CREATE_PACKAGE'
+          exists=$(grep "${{ vars.PACKAGE_NAME }}"  response.json)
+          package_exists=0;
+          echo '$exists'
+          echo '$package_exists'
           
       - name: Create Package
         env:

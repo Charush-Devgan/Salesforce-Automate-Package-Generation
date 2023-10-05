@@ -49,7 +49,10 @@ jobs:
         id: package-finder
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
-          exists=$(grep "${{ vars.PACKAGE_NAME }}"  response.json)
+          package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
+          echo $package_found
+          exists=0;
+          if [  $package_found = "[]" ] ; then exists = 0; else exists = 1; fi 
           echo $exists
           package_exists=0;
           

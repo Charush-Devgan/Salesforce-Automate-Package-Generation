@@ -45,21 +45,16 @@ jobs:
       - name: Authenticate Dev Hub
         run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
 
-      - name: Check if package with same name exists
-        id: package-finder
+      - name: Create a package if not there
         run: |
           sfdx force:package:list -v "${{ vars.SALESFORCE_USERNAME }}" --verbose --json > response.json          
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
-          echo $package_found
-          exists=0; 
+          echo $package_found 
           if [ $package_found == "[]" ]; then
+            echo "Creating Package"
             sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub
           fi
-          
-          
-     
-             
-            
+      
       - name: Create package Version
         run: sf package version create --package "${{ vars.PACKAGE_NAME }}" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub
 

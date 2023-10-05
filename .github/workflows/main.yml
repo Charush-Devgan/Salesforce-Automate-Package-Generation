@@ -52,10 +52,8 @@ jobs:
           package_found=$(jq '.result | map(. | select(.Name=="${{ vars.PACKAGE_NAME }}"))' < response.json  | head )
           echo $package_found
           exists=0;
-          if [  $package_found = "[]" ] ; then exists=0; else exists=1; fi 
-          echo $exists
-          echo "CREATE_PACKAGE='$exists'" >> "$GITHUB_OUTPUT"
-          echo $CREATE_PACKAGE
+          if [  $package_found = "[]" ] ; then sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub 
+          
           
           
       - name: Create Package
@@ -64,7 +62,7 @@ jobs:
         if: CREATE_PACKAGE == 0
         run: |
           echo ${{ steps.package-finder.outputs.CREATE_PACKAGE}}
-           sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub  
+             
             
       - name: Create package Version
         run: sf package version create --package "${{ vars.PACKAGE_NAME }}" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub

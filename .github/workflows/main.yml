@@ -54,7 +54,8 @@ jobs:
           exists=0;
           if [  $package_found = "[]" ] ; then exists=0; else exists=1; fi 
           echo $exists
-          package_exists=0;
+          echo "CREATE_PACKAGE='$exists'" >> "$GITHUB_OUTPUT"
+          echo '$CREATE_PACKAGE'
           
           
       - name: Create Package

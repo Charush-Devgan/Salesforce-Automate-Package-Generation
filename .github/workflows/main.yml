@@ -56,12 +56,7 @@ jobs:
           
           
           
-      - name: Create Package
-        env:
-          CREATE_PACKAGE: ${{ steps.package-finder.outputs.CREATE_PACKAGE }}
-        if: CREATE_PACKAGE == 0
-        run: |
-          echo ${{ steps.package-finder.outputs.CREATE_PACKAGE}}
+     
              
             
       - name: Create package Version

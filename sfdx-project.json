@@ -23,6 +23,14 @@
       "versionNumber": "0.1.0.NEXT",
       "default": false,
       "versionDescription": ""
+    },
+    {
+      "path": "force-app",
+      "package": "Test Package 11",
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "default": false,
+      "versionDescription": ""
     }
   ],
   "namespace": "",
@@ -43,6 +51,8 @@
     "Test Package 9": "0Ho5h000000oM1MCAU",
     "Test Package 9@0.1.0-1": "04t5h00000061OLAAY",
     "Test Package 9@0.1.0-2": "04t5h00000061OQAAY",
-    "Test Package 9@0.1.0-3": "04t5h00000061OVAAY"
+    "Test Package 9@0.1.0-3": "04t5h00000061OVAAY",
+    "Test Package 11": "0Ho5h000000oM1RCAU",
+    "Test Package 11@0.1.0-1": "04t5h00000061OaAAI"
   }
 }

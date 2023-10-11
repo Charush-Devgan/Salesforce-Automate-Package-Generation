@@ -54,7 +54,7 @@ jobs:
             echo "Creating Package"
             sf package create --name "${{ vars.PACKAGE_NAME }}" --package-type Unlocked --path force-app --no-namespace --target-dev-hub devhub
           fi
-      
+             
       - name: Create package Version
         run: sf package version create --package "${{ vars.PACKAGE_NAME }}" --installation-key ${{ vars.UNLOCKED_PACKAGE_PASSWORD }} --wait 10 --target-dev-hub devhub -c
 
@@ -70,4 +70,13 @@ jobs:
         run: |
           version_id=$(grep -o "04t[[:alnum:]]\{15\}" sfdx-project.json | tail -n1)
           sfdx force:package:version:promote -p "$version_id" --noprompt
-        
+     
+      - name: Store new version id
+        run: |
+          sed -i -e "s/04t[[:alnum:]]\{15\}/${version_id}/" README.md
+          git config user.name "release[bot]"
+          git config user.email "<>"
+          git add README.md
+          git add sfdx-project.json
+          git commit -m "Updating new pre-release version"
+          git push

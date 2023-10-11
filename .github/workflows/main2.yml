@@ -39,7 +39,7 @@ jobs:
           sudo apt-get install jq
 
       - name: Setup server key
-        run: echo "${{ secrets.SALESFORCE_JWT_SECRET_KEY }}" > server.key
+        run: echo "${{ secrets.PRIVATE_KEY }}" > server.key
 
       - name: JWT Authentication to target Org
         run: sfdx auth:jwt:grant --client-id=${{ secrets.CONSUMER_KEY }} --jwt-key-file=server.key --username=${{ vars.USERNAME }} --set-default-dev-hub -a targetOrg
